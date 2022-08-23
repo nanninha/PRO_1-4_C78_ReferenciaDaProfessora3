@@ -8,13 +8,15 @@ import {
   ImageBackground,
   Image
 } from "react-native";
-import * as Permissions from "expo-permissions";
+import {Camera} from "expo-camera";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import db from "../config";
+
+import {db} from "../config"
 
 const bgImage = require("../assets/background2.png");
 const appIcon = require("../assets/appIcon.png");
 const appName = require("../assets/appName.png");
+
 
 export default class TransactionScreen extends Component {
   constructor(props) {
@@ -29,11 +31,11 @@ export default class TransactionScreen extends Component {
   }
 
   getCameraPermissions = async domState => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    const { status } = await Camera.requestCameraPermissionsAsync();
 
     this.setState({
-      /*status === "granted" é verdadeiro se o usuário concedeu permissão
-          status === "granted" é falso se o usuário não concedeu a permissão
+      /*status === "granted" é verdadeiro quando o usuário concedeu permissão
+          status === "granted" é false quando o usuário não concedeu permissão
         */
       hasCameraPermissions: status === "granted",
       domState: domState,
@@ -58,8 +60,7 @@ export default class TransactionScreen extends Component {
       });
     }
   };
-
-  handleTransaction = () => {
+ handleTransaction = () => {
     var { bookId } = this.state;
     db.collection("books")
       .doc(bookId)
@@ -78,11 +79,6 @@ export default class TransactionScreen extends Component {
   initiateBookIssue = () => {
     console.log("Livro entregue para o aluno!");
   };
-
-  initiateBookReturn = () => {
-    console.log("Livro devolvido à biblioteca!");
-  };
-
   render() {
     const { bookId, studentId, domState, scanned } = this.state;
     if (domState !== "normal") {
@@ -104,7 +100,7 @@ export default class TransactionScreen extends Component {
             <View style={styles.textinputContainer}>
               <TextInput
                 style={styles.textinput}
-                placeholder={"ID do Livro"}
+                placeholder={"Id Livro"}
                 placeholderTextColor={"#FFFFFF"}
                 value={bookId}
               />
@@ -118,7 +114,7 @@ export default class TransactionScreen extends Component {
             <View style={[styles.textinputContainer, { marginTop: 25 }]}>
               <TextInput
                 style={styles.textinput}
-                placeholder={"ID do Aluno"}
+                placeholder={"Id Aluno"}
                 placeholderTextColor={"#FFFFFF"}
                 value={studentId}
               />
@@ -129,12 +125,16 @@ export default class TransactionScreen extends Component {
                 <Text style={styles.scanbuttonText}>Digitalizar</Text>
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              style={[styles.button, { marginTop: 25 }]}
-              onPress={this.handleTransaction}
+            <TouchableOpacity 
+              style={[styles.button, {marginTop:25}]}
+              onPress = {this.handleTransaction}
             >
-              <Text style={styles.buttonText}>Enviar</Text>
+                <Text style={styles.buttonText}>
+                  Enviar
+                </Text>
             </TouchableOpacity>
+
+
           </View>
         </ImageBackground>
       </View>
@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     fontSize: 18,
     backgroundColor: "#5653D4",
-    fontFamily: "Rajdhani_600SemiBold",
     color: "#FFFFFF"
   },
   scanbutton: {
@@ -202,19 +201,19 @@ const styles = StyleSheet.create({
   scanbuttonText: {
     fontSize: 20,
     color: "#0A0101",
-    fontFamily: "Rajdhani_600SemiBold"
   },
   button: {
     width: "43%",
     height: 55,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F48D20",
-    borderRadius: 15
+    backgroundColor: "magenta",
+    borderRadius: 15,
+    
   },
   buttonText: {
-    fontSize: 24,
-    color: "#FFFFFF",
-    fontFamily: "Rajdhani_600SemiBold"
-  }
+    fontSize: 20,
+    borderColor: "black",
+    fontFamily: "Rajdhani_600SemiBold",
+  },
 });
