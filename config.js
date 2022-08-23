@@ -2,14 +2,14 @@ import firebase from "firebase";
 require("@firebase/firestore");
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAdTFPsEJoDDJOu8cxh1rK6z0pTe4QyB7o",
-  authDomain: "biblioteca-eletronica-27177.firebaseapp.com",
-  projectId: "biblioteca-eletronica-27177",
-  storageBucket: "biblioteca-eletronica-27177.appspot.com",
-  messagingSenderId: "601499718101",
-  appId: "1:601499718101:web:0fdd1cbe2ce9bead58ed5c",
-  measurementId: "G-NF498E9XMM"
-};
+    apiKey: "AIzaSyDFnzAFIwWeNdWiDH7DIaIDOsG_THp6Vvc",
+    authDomain: "e-books-22e6d.firebaseapp.com",
+    projectId: "e-books-22e6d",
+    storageBucket: "e-books-22e6d.appspot.com",
+    messagingSenderId: "85790579966",
+    appId: "1:85790579966:web:5e7148a1ed61e4340ad9af"
+  };
+
 
 firebase.initializeApp(firebaseConfig);
 
